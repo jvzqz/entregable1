@@ -2,44 +2,59 @@ class ProductManager {
 
     constructor(){
         this.products = [];
+        this.id = 1;
     }
 
-static id = 0
-
-addProduct (tittle, description, price, thumbnail, code, stock, id) {
+addProduct (tittle, description, price, thumbnail, code, stock) {
     for (let i=0; i< this.products.length; i++){
-        if(this.products[i.code === code]){
+        if(this.products[i]["code" === code]){
             console.log ("El código está repetido");
-            break;
+            return;
         }
     }
-    if (!products.tittle || !products.description || !products.price || !products.thumbnail || !products.code || !products.stock || !products.id){
-        console.error ('Los campos son obligatorios')
-    } else {
-    ProductManager.id ++
-    this.products.push (tittle, description, price, thumbnail, code, stock, id=ProductManager.id)};  
-}
+    if (!tittle || !description || !price || !thumbnail || !code || !stock){
+        console.error ("Los campos son obligatorios");
+        return;
+    
+    }
+    const product = {
+        id: this.id,
+        tittle,
+        description,
+        price,
+        thumbnail,
+        code,
+        stock,
+      };
+    
+this.products.push (product);
+  
+console.log ("Producto agregado correctamente");
+
+this.id++;
+    }
 
 getProducts () {
     return this.products;
 }
 
-existe (id) {
-    return this.products.find((products) => products.id === id)
-}
-
-getProductsById (id) {
-  !this.existe(id) ? console.log("Not Found") : console.log (this.existe(id));
+getProductById(id) {
+    const exist = this.products.find((product) => product.id == id);
+    !exist ? console.log("Not Found") : false;
+    return exist;
 }
 
 }
 
 const products = new ProductManager;
 
-console.log (products.getProducts());
+products.addProduct('Producto prueba', 'Este es un producto de prueba', 200, 'Sin imagen', 'abc123', 25);
+products.addProduct('Producto prueba', 'Este es un producto de prueba', 200, 'Sin imagen', 'abc123', 25);
+products.addProduct('Producto prueba 2', 'Descripcion 2', 200, 'img', 'abcd1234');
 
-products.addProduct ('producto prueba', 'Este es un producto prueba', '200', 'Sin imagen', 'abc123','25');
+console.log('Lista de productos:', products.getProducts());
 
-console.log (products.getProducts());
+const productById = products.getProductById(1);
+console.log('Producto por ID:', productById);
 
-console.log (products.getProductsById(1));
+const nonExistentProduct = products.getProductById(5);
